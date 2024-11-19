@@ -6,9 +6,10 @@
         <title>Админка</title>
     </head>
     <body>
+        <header><a href="/"><img src="/img/logo.png" alt="Главная"></a></header>
         <h1>Управление пользователями</h1>
         <ul>
-            <% users.forEach(user => { %>
+            <% user.forEach(user => { %>
                 <li><%= user.username %> <a href="#" onclick="event.preventDefault(); deleteUser(<%= user.id %>);">Удалить</a></li>
             <% }) %>
         </ul>

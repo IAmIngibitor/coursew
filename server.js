@@ -21,9 +21,9 @@ app.use(cookies())
 
 const PORT = process.env.PORT || 3000;
 
-app.use(require('./routes/authRoute'));
-app.use(require('./routes/postRoute'));
-app.use(require('./routes/userRoute'));
+app.use(require('./routes/authRoutes'));
+app.use(require('./routes/postRoutes'));
+app.use(require('./routes/userRoutes'));
 
 sequelize.sync().then(() => {
     app.listen(PORT, () => {

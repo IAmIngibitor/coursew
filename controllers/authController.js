@@ -6,7 +6,7 @@ exports.register = async (req, res) => {
     const { username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ username, password_hash: hashedPassword });
-    res.status(201).json({ message: 'Пользователь зарегистрирован', user });
+    res.render("profile", {username: username});
 };
 
 exports.login = async (req, res) => {
@@ -15,8 +15,8 @@ exports.login = async (req, res) => {
     if (user && await bcrypt.compare(password, user.password_hash)) {
         const token = jwt.sign({ id:user.id, role: user.role }, process.env.JWT_SECRET);
         res.cookie("token", token, { httpOnly: true, secure: true });
-        res.json({ message: 'Успешный вход', token });
-        
+        // res.json({ message: 'Успешный вход', token });
+        res.render("profile", {username: username})
     } else {
         res.status(401).json({ message: 'Неверные учетные данные' });
     }

@@ -4,7 +4,7 @@ const User = require('../models/user');
 exports.createPost = async (req, res) => {
     const { content } = req.body;
     const post = await Post.create({ content, user_id: req.user.id });
-    res.status(201).json(post);
+    res.redirect('/');
 };
 
 exports.getPosts = async (req, res) => {

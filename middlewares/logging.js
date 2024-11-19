@@ -8,8 +8,7 @@ if (!fs.existsSync(path.dirname(logFilePath))) {
 }
 
 module.exports = (req, res, next) => {
-    const logEntry = `${new Date().toISOString()} - ${req.method} 
-    ${req.originalUrl} - IP: ${req.ip} - User-Agent: ${req.headers['user-agent']}\n`;
+    const logEntry = `${new Date().toISOString()} - ${req.method} ${req.originalUrl} - IP: ${req.ip} - User-Agent: ${req.headers['user-agent']}\n`;
 
     fs.appendFile(logFilePath, logEntry, (err) => {
         if (err) console.error('Ошибка записи в лог:', err);
