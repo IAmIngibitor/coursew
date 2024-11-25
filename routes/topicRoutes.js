@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const postController = require('../controllers/postController');
-const auth = require('../middlewares/auth');
+const express = require('express')
+const router = express.Router()
+const postController = require('../controllers/postController')
+const auth = require('../middlewares/auth')
 
-router.post('/topic', auth, postController.createPost);
+router.post('/topic', auth.authenticate, postController.createPost);
 router.get('/', postController.getPosts);
-router.delete('/:id', auth, postController.deletePost);
+router.delete('/post/:id', auth.authenticate, auth.ensureAdmin, postController.deletePost);
 
-module.exports = router;
+module.exports = router

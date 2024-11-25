@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const auth = require('../middlewares/auth');
 
-router.get('/', auth, userController.getUsers);
-router.delete('/:id', auth, userController.deleteUser);
+router.get('/', userController.getUsers);
+router.delete('/:id', auth.authenticate, auth.ensureAdmin, userController.deleteUser);
 
 module.exports = router;

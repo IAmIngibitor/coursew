@@ -22,8 +22,10 @@ app.use(cookies())
 const PORT = process.env.PORT || 3000;
 
 app.use(require('./routes/authRoutes'));
-app.use(require('./routes/postRoutes'));
+app.use(require('./routes/topicRoutes'));
 app.use(require('./routes/userRoutes'));
+app.use(require('./routes/profileRoutes'));
+app.use(require('./routes/adminRoutes'))
 
 sequelize.sync().then(() => {
     app.listen(PORT, () => {
@@ -32,4 +34,3 @@ sequelize.sync().then(() => {
 }).catch(err => {
     console.error('Ошибка при синхронизации базы данных:', err);
 });
-    

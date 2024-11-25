@@ -1,0 +1,14 @@
+const Post = require('../models/post')
+const User = require('../models/user')
+
+exports.createPost = async (content, userId) => {
+    return await Post.create({ content, user_id: userId })
+}
+
+exports.getAllPosts = async () => {
+    return await Post.findAll({ include: [{ model: User, as: 'user' }] })
+}
+
+exports.deletePostById = async (postId) => {
+    return await Post.destroy({ where: { id: postId } })
+}

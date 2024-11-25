@@ -9,6 +9,32 @@
         <header><a href="/"><img src="/img/logo.png" alt="Главная"></a></header>
         <h1>Профиль пользователя</h1>
         <p>Имя пользователя: <%= username %></p>
+        <p>Роль: <%= role %></p>
         <a href="/logout">Выйти</a>
+
+        <% if (role === 'admin') { %>
+            <h2>Управление пользователями</h2>
+            <ul>
+                <% users.forEach(user => { %>
+                    <li>
+                        <%= user.username %>
+                        <button onclick="deleteUser('<%= user.id %>')">Удалить</button>
+                    </li>
+                <% }) %>
+            </ul>
+
+            <script>
+                async function deleteUser(userId) {
+                    if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+                        try {
+                            await fetch(`/user/${userId}`, { method: 'DELETE' })
+                            location.reload()
+                        } catch (err) {
+                            alert('Ошибка при удалении пользователя')
+                        }
+                    }
+                }
+            </script>
+        <% } %>
     </body>
 </html>

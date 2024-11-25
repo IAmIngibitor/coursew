@@ -6,16 +6,38 @@
         <title>Главная страница</title>
     </head>
     <body>
-        <header><a href="/"><img src="/img/logo.png" alt="Главная"></a></header>
-        <form action="/posts" method="POST">
+        <header>
+            <a href="/"><img src="/img/logo.png" alt="Главная"></a>
+            <a href="/profile">Профиль</a>
+        </header>
+        <form action="/topic" method="POST">
             <textarea name="content" required></textarea>
             <button type="submit">Создать пост</button>
         </form>
         <h1>Посты</h1>
         <ul>
             <% posts.forEach(post => { %>
-                <li><%= post.content %> - <strong>Автор: <%= post.user.username %></strong></li>
+                <li>
+                    <strong><%= post.user.username %></strong>: <%= post.content %>
+                    <small>(<%= post.createdAt.toLocaleString() %>)</small>
+                    <% if (user && user.role === 'admin') { %>
+                        <button onclick="deletePost('<%= post.id %>')">Удалить</button>
+                    <% } %>
+                </li>
             <% }) %>
         </ul>
+
+        <script>
+            async function deletePost(postId) {
+                if (confirm('Вы уверены, что хотите удалить пост?')) {
+                    try {
+                        await fetch(`/post/${postId}`, { method: 'DELETE' })
+                        location.reload()
+                    } catch (err) {
+                        alert('Ошибка при удалении поста')
+                    }
+                }
+            }
+        </script>
     </body>
 </html>

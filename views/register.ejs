@@ -11,6 +11,11 @@
         <form action="/register" method="POST">
             <input type="text" name="username" placeholder="Имя пользователя" required><br><br>
             <input type="password" name="password" placeholder="Придумайте пароль" required><br><br>
+            <label for="role">Выберите роль:</label>
+            <select name="role" id="role">
+                <option value="user">Пользователь</option>
+                <option value="admin">Администратор</option>
+            </select><br><br>
             <button type="submit">Зарегистрироваться</button>
         </form>
     </body>

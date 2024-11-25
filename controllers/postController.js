@@ -1,19 +1,37 @@
-const Post = require('../models/post');
-const User = require('../models/user');
+const Post = require('../models/post')
+const User = require('../models/user')
+const postService = require('../services/postService')
 
 exports.createPost = async (req, res) => {
-    const { content } = req.body;
-    const post = await Post.create({ content, user_id: req.user.id });
-    res.redirect('/');
-};
+        try {
+            const { content } = req.body
+            const newPost = await Post.create({ content, user_id: req.user.id })
+            res.status(201).json(newPost)
+        } catch (err) {
+            console.error(err)
+            res.status(500).send('Ошибка при создании поста')
+        }
+}
 
 exports.getPosts = async (req, res) => {
-    const posts = await Post.findAll({ include: [{ model: User, as: 'user' }] });
-    res.render("index", { posts: posts });
-};
+    try {
+        const posts = await Post.findAll({
+            include: [{ model: User, as: 'user', attributes: ['username'] }],
+            order: [['createdAt', 'DESC']]
+        })
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Ошибка при получении постов')
+    }
+}
 
 exports.deletePost = async (req, res) => {
-    const postId = req.params.id;
-    await Post.destroy({ where: { id: postId } });
-    res.status(204).send();
-};
+    try {
+        const postId = req.params.id
+        await Post.destroy({ where: { id: postId } })
+        return res.status(200).send('Пост удален')
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Ошибка при удалении поста')
+    }
+}
