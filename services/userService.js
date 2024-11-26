@@ -7,4 +7,3 @@ exports.getAllUsers = async () => {
 exports.deleteUserById = async (userId) => {
     return await User.destroy({ where: { id: userId } });
 };
-

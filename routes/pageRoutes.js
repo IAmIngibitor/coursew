@@ -7,5 +7,4 @@ router.get('/', authMiddleware, pageController.renderHomePage);
 router.get('/login', pageController.renderLoginPage);
 router.get('/register', pageController.renderRegisterPage);
 
-
 module.exports = router;

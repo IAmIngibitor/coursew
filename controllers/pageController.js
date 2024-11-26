@@ -1,10 +1,10 @@
-const postService = require('../services/postService');
+const topicService = require('../services/topicService');
 const User = require('../models/user');
 
 exports.renderHomePage = async (req, res) => {
     try {
-        const posts = await postService.getAllPosts();
-        res.render('home', { user: req.user, posts });
+        const topics = await topicService.getAllTopics();
+        res.render('home', { user: req.user, topics });
     } catch (err) {
         res.status(500).send('Ошибка загрузки главной страницы.' + err.message);
     }

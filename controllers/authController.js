@@ -32,4 +32,3 @@ exports.logoutUser = (req, res) => {
         res.status(500).send('Ошибка выхода: ' + err.message);
     }
 };
-

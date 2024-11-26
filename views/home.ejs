@@ -21,7 +21,7 @@
     </header>
     <h1>Посты</h1>
     <% if (user) { %>
-        <form action="/posts/create" method="POST">
+        <form action="/topics/create" method="POST">
             <textarea name="content" placeholder="Напишите ваш пост..." required></textarea>
             <button type="submit">Опубликовать</button>
         </form>
@@ -29,12 +29,12 @@
         <p><a href="/login">Войдите</a>, чтобы создать пост.</p>
     <% } %>
     <ul>
-        <% posts.forEach(post => { %>
+        <% topics.forEach(topic => { %>
             <li>
-                <strong><%= post.user.username %></strong> (<%= post.createdAt.toLocaleString() %>):
-                <p><%= post.content %></p>
+                <strong><%= topic.user.username %></strong> (<%= topic.createdAt.toLocaleString() %>):
+                <p><%= topic.content %></p>
                 <% if (user && user.role === 'admin') { %>
-                    <form action="/posts/delete/<%= post.id %>" method="POST" style="display:inline;">
+                    <form action="/topics/delete/<%= topic.id %>" method="POST" style="display:inline;">
                         <button type="submit">Удалить</button>
                     </form>
                 <% } %>
@@ -43,4 +43,3 @@
     </ul>
 </body>
 </html>
-

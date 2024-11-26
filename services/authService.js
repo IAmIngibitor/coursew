@@ -13,5 +13,5 @@ exports.loginUser = async (username, password) => {
         const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET);
         return { token, user };
     }
-    throw new Error('Invalid credentials');
+    throw new Error('Неверные учетные данные');
 };

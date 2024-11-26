@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../db');
 const User = require('./user');
 
-const Post = sequelize.define('Post', {
+const Topic = sequelize.define('Topic', {
     content: DataTypes.STRING,
     createdAt: {
         type: DataTypes.DATE,
@@ -12,10 +12,10 @@ const Post = sequelize.define('Post', {
     user_id: DataTypes.INTEGER,
 });
 
-Post.prototype.formattedDate = function () {
+Topic.prototype.formattedDate = function () {
     return this.createdAt.toLocaleString();
 };
 
-Post.belongsTo(User, { as: 'user', foreignKey: 'user_id', onDelete: 'CASCADE' });
+Topic.belongsTo(User, { as: 'user', foreignKey: 'user_id', onDelete: 'CASCADE' });
 
-module.exports = Post;
+module.exports = Topic;

@@ -1,33 +1,32 @@
-const postService = require('../services/postService');
+const topicService = require('../services/topicService');
 
-exports.createPost = async (req, res) => {
+exports.createTopic = async (req, res) => {
     const { content } = req.body;
     try {
         if (!content.trim()) {
             return res.status(400).send('Пост не может быть пустым.');
         }
-        await postService.createPost(content, req.user.id);
+        await topicService.createTopic(content, req.user.id);
         res.redirect('/');
     } catch (err) {
         res.status(500).send('Ошибка создания поста: ' + err.message);
     }
 };
 
-exports.deletePost = async (req, res) => {
+exports.deleteTopic = async (req, res) => {
     try {
-        await postService.deletePostById(req.params.postId, req.user.id, req.user.role);
+        await topicService.deleteTopicById(req.params.topicId, req.user.id, req.user.role);
         res.redirect('/');
     } catch (err) {
         res.status(500).send('Ошибка удаления поста: ' + err.message);
     }
 };
 
-exports.getAllPosts = async (req, res) => {
+exports.getAllTopics = async (req, res) => {
     try {
-        const posts = await postService.getAllPosts();
-        res.render('home', { user: req.user, posts });
+        const topics = await topicService.getAllTopics();
+        res.render('home', { user: req.user, topics });
     } catch (err) {
         res.status(500).send('Ошибка загрузки постов: ' + err.message);
     }
 };
-
