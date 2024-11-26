@@ -1,29 +1,29 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 
 module.exports = async (req, res, next) => {
-    const token = req.cookies?.token;
+    const token = req.cookies?.token
 
     if (!token) {
-        req.user = null; // Устанавливаем пользователя как null для неавторизованных
-        return next();
+        req.user = null
+        return next()
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findByPk(decoded.id);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        const user = await User.findByPk(decoded.id)
 
         if (!user) {
-            req.user = null; // Пользователь не найден
+            req.user = null
             res.clearCookie('token')
-            return next();
+            return next()
         }
 
-        req.user = { id: user.id, username: user.username, role: user.role };
-        next();
+        req.user = { id: user.id, username: user.username, role: user.role }
+        next()
     } catch (err) {
-        req.user = null; // Токен недействителен
+        req.user = null
         res.clearCookie('token')
-        next();
+        next()
     }
-};
+}

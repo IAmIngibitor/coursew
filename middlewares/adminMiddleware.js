@@ -1,6 +1,6 @@
 exports.adminMiddleware = (req, res, next) => {
     if (req.user.role !== 'admin') {
-        return res.status(403).send('Нет доступа');
+        return res.status(403).send('Нет доступа')
     }
-    next();
-};
+    next()
+}
