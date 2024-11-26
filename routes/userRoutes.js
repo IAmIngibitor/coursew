@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-const auth = require('../middlewares/auth');
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.get('/', userController.getUsers);
-router.delete('/:id', auth.authenticate, auth.ensureAdmin, userController.deleteUser);
+router.get('/profile', authMiddleware, userController.getProfile);
+router.post('/delete/:userId', authMiddleware, userController.deleteUser); // Удаление пользователя
 
 module.exports = router;

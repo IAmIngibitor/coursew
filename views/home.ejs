@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img src="/img/logo.png" alt="Logo" style="height: 50px;">
+        </a>
+        <% if (user) { %>
+            <p>Привет, <%= user.username %>!</p>
+            <a href="/user/profile">Профиль</a>
+            <a href="/auth/logout">Выйти</a>
+        <% } else { %>
+            <a href="/login">Войти</a>
+            <a href="/register">Регистрация</a>
+        <% } %>
+    </header>
+    <h1>Посты</h1>
+    <% if (user) { %>
+        <form action="/posts/create" method="POST">
+            <textarea name="content" placeholder="Напишите ваш пост..." required></textarea>
+            <button type="submit">Опубликовать</button>
+        </form>
+    <% } else { %>
+        <p><a href="/login">Войдите</a>, чтобы создать пост.</p>
+    <% } %>
+    <ul>
+        <% posts.forEach(post => { %>
+            <li>
+                <strong><%= post.user.username %></strong> (<%= post.createdAt.toLocaleString() %>):
+                <p><%= post.content %></p>
+                <% if (user && user.role === 'admin') { %>
+                    <form action="/posts/delete/<%= post.id %>" method="POST" style="display:inline;">
+                        <button type="submit">Удалить</button>
+                    </form>
+                <% } %>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>
+

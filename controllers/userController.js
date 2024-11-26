@@ -1,22 +1,22 @@
-const User = require('../models/user');
+const userService = require('../services/userService');
 
-exports.getUsers = async (req, res) => {
+exports.getProfile = async (req, res) => {
     try {
-        const users = await User.findAll();
-        res.status(200).send(users);
+        const users = req.user.role === 'admin' ? await userService.getAllUsers() : null;
+        res.render('profile', { user: req.user, users });
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Ошибка при получении пользователей');
+        res.status(500).send('Ошибка загрузки профиля: ' + err.message);
     }
 };
 
 exports.deleteUser = async (req, res) => {
     try {
-        const { id } = req.params;
-        await User.destroy({ where: { id } });
-        res.status(200).send('Пользователь удалён');
+        if (req.user.id === parseInt(req.params.userId)) {
+            return res.status(400).send('Нельзя удалить самого себя.');
+        }
+        await userService.deleteUserById(req.params.userId);
+        res.redirect('/user/profile');
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Ошибка при удалении пользователя');
+        res.status(500).send('Ошибка удаления пользователя: ' + err.message);
     }
 };

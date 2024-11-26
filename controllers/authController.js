@@ -1,22 +1,35 @@
-const authService = require('../services/authService')
+const authService = require('../services/authService');
 
-exports.register = async (req, res) => {
+exports.registerUser = async (req, res) => {
     const { username, password, role } = req.body;
     try {
-        const user = await authService.registerUser(username, password, role)
-        res.render("profile", { username: username, role: user.role});
+        if (!['user', 'admin'].includes(role)) {
+            return res.status(400).send('Недопустимая роль.');
+        }
+        await authService.registerUser(username, password, role);
+        res.redirect('/login');
     } catch (err) {
-        res.status(500).send('Ошибка при регистрации')
+        res.status(500).send('Ошибка регистрации: ' + err.message);
     }
 };
 
-exports.login = async (req, res) => {
-    const { username, password } = req.body;
+exports.loginUser = async (req, res) => {
     try {
-        const { token, user } = await authService.loginUser(username, password)
-        res.cookie("token", token, { httpOnly:true, secure: true })
-        res.render("profile", { username: user.username, role: user.role })
+        const { username, password } = req.body;
+        const { token, user } = await authService.loginUser(username, password);
+        res.cookie('token', token, { httpOnly: true, secure: false })
+        res.redirect('/')
     } catch (err) {
-        res.status(401).json({ message: err.message })
+        res.status(401).json({ error: err.message });
     }
 };
+
+exports.logoutUser = (req, res) => {
+    try {
+        res.clearCookie('token');
+        res.redirect('/login');
+    } catch (err) {
+        res.status(500).send('Ошибка выхода: ' + err.message);
+    }
+};
+

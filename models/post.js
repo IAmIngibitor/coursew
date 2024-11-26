@@ -1,16 +1,21 @@
-const { Model, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../db');
 const User = require('./user');
 
-class Post extends Model {}
-
-Post.init({
-    content: { type: DataTypes.TEXT, allowNull: false },
-    user_id: { type: DataTypes.INTEGER, allowNull: false }
-}, {
-    sequelize, modelName: 'Post', timestamps: true
+const Post = sequelize.define('Post', {
+    content: DataTypes.STRING,
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+    },
+    user_id: DataTypes.INTEGER,
 });
 
-Post.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+Post.prototype.formattedDate = function () {
+    return this.createdAt.toLocaleString();
+};
+
+Post.belongsTo(User, { as: 'user', foreignKey: 'user_id', onDelete: 'CASCADE' });
 
 module.exports = Post;

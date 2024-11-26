@@ -1,36 +1,38 @@
+require('dotenv').config();
 const express = require('express');
-const cookies = require("cookie-parser")
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-const fs = require('fs');
 const path = require('path');
-const jwt = require('jsonwebtoken');
-dotenv.config();
 const sequelize = require('./db');
-const logging = require('./middlewares/logging');
-const User = require('./models/user');
-const Post = require('./models/post');
+const authRoutes = require('./routes/authRoutes');
+const postRoutes = require('./routes/postRoutes');
+const pageRoutes = require('./routes/pageRoutes');
+const userRoutes = require('./routes/userRoutes')
+const loggingMiddleware = require('./middlewares/loggingMiddleware');
+const cookieParser = require('cookie-parser');
 
 const app = express();
+app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded());
-app.use(logging);
-app.set("view engine", "ejs")
-app.use(cookies())
+
+// Настройка EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Middleware для парсинга
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
-const PORT = process.env.PORT || 3000;
+// Логирование запросов
+app.use(loggingMiddleware);
 
-app.use(require('./routes/authRoutes'));
-app.use(require('./routes/topicRoutes'));
-app.use(require('./routes/userRoutes'));
-app.use(require('./routes/profileRoutes'));
-app.use(require('./routes/adminRoutes'))
+// Маршруты
+app.use('/', pageRoutes);
+app.use('/auth', authRoutes);
+app.use('/posts', postRoutes);
+app.use('/user', userRoutes);
 
+// Запуск сервера и синхронизация базы данных
 sequelize.sync().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Сервер запущен на порту ${PORT}`);
-    });
-}).catch(err => {
-    console.error('Ошибка при синхронизации базы данных:', err);
-});
+    app.listen(3000, () => console.log('Секвер запущен на http://localhost:3000'));
+}).catch(err => console.error('Ошибка синхронизации с БД:', err));

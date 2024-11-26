@@ -1,40 +1,37 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Профиль</title>
     </head>
     <body>
-        <header><a href="/"><img src="/img/logo.png" alt="Главная"></a></header>
-        <h1>Профиль пользователя</h1>
-        <p>Имя пользователя: <%= username %></p>
-        <p>Роль: <%= role %></p>
-        <a href="/logout">Выйти</a>
+        <header>
+            <a href="/">
+                <img src="/img/logo.png" alt="Logo" style="height: 50px;">
+            </a>
+        </header>
+        <h1>Профиль</h1>
+        <p>Логин: <%= user.username %></p>
+        <p>Роль: <%= user.role %></p>
+        <a href="/auth/logout">Выйти</a>
 
-        <% if (role === 'admin') { %>
-            <h2>Управление пользователями</h2>
+        <% if (user.role === 'admin') { %>
+            <h2>Список пользователей</h2>
             <ul>
-                <% users.forEach(user => { %>
+                <% users.forEach(u => { %>
                     <li>
-                        <%= user.username %>
-                        <button onclick="deleteUser('<%= user.id %>')">Удалить</button>
+                        <%= u.username %> (<%= u.role %>)
+                        <% if (u.id !== user.id) { %>
+                            <form action="/user/delete/<%= u.id %>" method="POST" style="display:inline;">
+                                <button type="submit">Удалить</button>
+                            </form>
+                        <% } else { %>
+                            (Нельзя удалить себя)
+                        <% } %>
                     </li>
                 <% }) %>
             </ul>
-
-            <script>
-                async function deleteUser(userId) {
-                    if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
-                        try {
-                            await fetch(`/user/${userId}`, { method: 'DELETE' })
-                            location.reload()
-                        } catch (err) {
-                            alert('Ошибка при удалении пользователя')
-                        }
-                    }
-                }
-            </script>
         <% } %>
     </body>
 </html>
