@@ -11,7 +11,8 @@ exports.renderHomePage = async (req, res) => {
 }
 
 exports.renderLoginPage = (req, res) => {
-    res.render('login')
+    const successMessage = req.query.successMessage
+    res.render('login', { successMessage })
 }
 
 exports.renderRegisterPage = (req, res) => {

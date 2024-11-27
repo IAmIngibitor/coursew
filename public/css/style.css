@@ -1,0 +1,43 @@
+header {
+    font-family: "Jura", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 400;
+}
+.logo {
+    height: 100px;
+}
+.topic-card {
+    background-color: #def1fdc4;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.topic-content {
+    background-color: #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    word-wrap: break-word;
+    color: #263b4e;
+}
+.topic-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 16px;
+    color: #263b4e;
+}
+textarea {
+    resize: none;
+    overflow: hidden;
+}
+.char-counter {
+    font-size: 0.8rem;
+    color: #6c757d;
+    text-align: right;
+}
+
+.role-select {
+    max-width: 170px;
+}

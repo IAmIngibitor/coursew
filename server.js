@@ -27,5 +27,5 @@ app.use('/topics', topicRoutes)
 app.use('/user', userRoutes)
 
 sequelize.sync().then(() => {
-    app.listen(3000, () => console.log('Секвер запущен на http://localhost:3000'))
+    app.listen(3000, () => console.log('Сервер запущен на http://localhost:3000'))
 }).catch(err => console.error('Ошибка синхронизации с БД:', err))

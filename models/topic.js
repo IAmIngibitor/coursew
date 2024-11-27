@@ -3,7 +3,7 @@ const sequelize = require('../db')
 const User = require('./user')
 
 const Topic = sequelize.define('Topic', {
-    content: DataTypes.STRING,
+    content: DataTypes.STRING(1000),
     createdAt: {
         type: DataTypes.DATE,
         allowNull: false,

@@ -4,42 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-    <header>
-        <a href="/">
-            <img src="/img/logo.png" alt="Logo" style="height: 50px;">
-        </a>
-        <% if (user) { %>
-            <p>Привет, <%= user.username %>!</p>
-            <a href="/user/profile">Профиль</a>
-            <a href="/auth/logout">Выйти</a>
-        <% } else { %>
-            <a href="/login">Войти</a>
-            <a href="/register">Регистрация</a>
-        <% } %>
-    </header>
-    <h1>Посты</h1>
-    <% if (user) { %>
-        <form action="/topics/create" method="POST">
-            <textarea name="content" placeholder="Напишите ваш пост..." required></textarea>
-            <button type="submit">Опубликовать</button>
-        </form>
-    <% } else { %>
-        <p><a href="/login">Войдите</a>, чтобы создать пост.</p>
-    <% } %>
-    <ul>
-        <% topics.forEach(topic => { %>
-            <li>
-                <strong><%= topic.user.username %></strong> (<%= topic.createdAt.toLocaleString() %>):
-                <p><%= topic.content %></p>
-                <% if (user && user.role === 'admin') { %>
-                    <form action="/topics/delete/<%= topic.id %>" method="POST" style="display:inline;">
-                        <button type="submit">Удалить</button>
-                    </form>
+<body data-bs-theme="dark">
+    <header class="bg-primary text-white p-3 mb-4">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="/" class="text-white text-decoration-none">
+                <img src="/img/logo4.png" alt="Logo" class="logo">
+            </a>
+            <div>
+                <% if (user) { %>
+                    <span>Привет, <strong><%= user.username %></strong>!</span>
+                    <a href="/user/profile" class="btn btn-outline-light btn-sm">Профиль</a>
+                    <a href="/auth/logout" class="btn btn-outline-light btn-sm">Выйти</a>
+                <% } else { %>
+                    <a href="/login" class="btn btn-outline-light btn-sm">Войти</a>
+                    <a href="/register" class="btn btn-outline-light btn-sm">Регистрация</a>
                 <% } %>
-            </li>
-        <% }) %>
-    </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="mb-4">Главная страница</h1>
+
+        <% if (user) { %>
+            <hr>
+            <form action="/topics/create" method="POST" class="mb-4 mx-auto" style="max-width: 600px;">
+                <h2 class="mb-3">📝Создать пост</h2>
+                <div class="mb-3">
+                    <textarea id="content" class="form-control" name="content" placeholder="Ваш пост..." maxlength="1000" required></textarea>
+                    <div class="char-counter" id="char-counter">0/1000</div>
+                    <button type="submit" class="btn btn-primary">Опубликовать</button>
+                </div>
+            </form>
+            <hr>
+        <% } else { %>
+            <p><a href="/login" class="text-decoration-none">Войдите</a>, чтобы создать тему.</p>
+        <% } %>
+
+        <div style="max-width: 700px;">
+            <h2>Опубликованные посты</h2>
+            <% topics.forEach(topic => { %>
+                <div class="topic-card">
+                    <div class="topic-content">
+                        <%= topic.content %>
+                    </div>
+                    <div class="topic-footer">
+                        <span>Автор:<strong><%= topic.user.username %></strong></span>
+                        <% if (user && user.role === 'admin') { %>
+                            <form action="/topics/delete/<%= topic.id %>" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Удалить пост</button>
+                            </form>
+                        <% } %>
+                        <span><%= topic.createdAt.toLocaleString() %></span>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </main>
+
+    <script src="/js/homeScript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
