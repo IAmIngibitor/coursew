@@ -14,7 +14,6 @@ exports.registerUser = async (username, password, role) => {
 exports.checkUsernamePassword = async (username, password) => {
     try {
         const user = await User.findOne({ where: { username } })
-        console.log(await bcrypt.compare(password, user.password_hash))
         if (user && await bcrypt.compare(password, user.password_hash)) {
             return true
         } else {

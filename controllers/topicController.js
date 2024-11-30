@@ -1,12 +1,20 @@
+const ScheduledTopic = require('../models/scheduledTopic')
 const topicService = require('../services/topicService')
 
 exports.createTopic = async (req, res) => {
-    const { content } = req.body
+    const { content, isScheduled, scheduledAt } = req.body
     try {
         if (!content.trim()) {
             return res.status(400).send('Пост не может быть пустым.')
         }
-        await topicService.createTopic(content, req.user.id)
+        console.log(scheduledAt)
+        if (isScheduled === 'on' && scheduledAt) {
+            console.log(true)
+            await ScheduledTopic.create({ content, user_id: req.user.id, scheduledAt: new Date(scheduledAt) })
+        } else {
+            console.log(false)
+            await topicService.createTopic(content, req.user.id)
+        }
         res.redirect('/')
     } catch (err) {
         res.status(500).send('Ошибка создания поста: ' + err.message)

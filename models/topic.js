@@ -9,7 +9,7 @@ const Topic = sequelize.define('Topic', {
         allowNull: false,
         defaultValue: Sequelize.NOW,
     },
-    user_id: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER
 })
 
 Topic.prototype.formattedDate = function () {

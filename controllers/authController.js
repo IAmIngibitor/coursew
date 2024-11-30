@@ -1,7 +1,7 @@
 const authService = require('../services/authService')
 
 exports.registerUser = async (req, res) => {
-    const { username, password, confirmPassword, role } = req.body
+    const { username, password, confirmPassword, role} = req.body
     if (password !== confirmPassword) {
         return res.render('register', { errorMessage: 'Пароли не совпадают.', username })
     }
@@ -9,11 +9,11 @@ exports.registerUser = async (req, res) => {
         return res.render('register', { errorMessage: 'Имя пользователя уже занято. Пожалуйста, выберите другое.', username })
     };
     try {
-        if (!['user', 'admin'].includes(role)) {
+        if (!['user', 'admin'].includes(role || 'user')) {
             return res.status(400).send('Недопустимая роль.')
         }
-        await authService.registerUser(username, password, role)
-        res.redirect('/login?successMessage=Регистрация успешна! Теперь войдите.',)
+        await authService.registerUser(username, password, role || 'user')
+        res.redirect('/login?successMessage=Регистрация успешна! Теперь войдите.')
     } catch (err) {
         console.log(username)
         res.status(500).send('Ошибка регистрации: ' + err.message)

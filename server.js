@@ -8,6 +8,8 @@ const pageRoutes = require('./routes/pageRoutes')
 const userRoutes = require('./routes/userRoutes')
 const loggingMiddleware = require('./middlewares/loggingMiddleware')
 const cookieParser = require('cookie-parser')
+const { publishScheduledTopics } = require('./services/schedulerService')
+setInterval(publishScheduledTopics, 5 * 60 * 1000)
 
 const app = express()
 app.use(cookieParser())

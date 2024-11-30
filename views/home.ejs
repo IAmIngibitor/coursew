@@ -36,6 +36,14 @@
                 <div class="mb-3">
                     <textarea id="content" class="form-control" name="content" placeholder="Ваш пост..." maxlength="1000" required></textarea>
                     <div class="char-counter" id="char-counter">0/1000</div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" id="schedulePost" class="form-check-input" name="isScheduled">
+                        <label for="schedulePost" class="form-check-label">Опубликовать позже</label>
+                    </div>
+                    <div class="mb-3" id="scheduleFields" style="display: none;">
+                        <label for="scheduleTime" class="form-label">Дата и время публикации</label>
+                        <input type="datetime-local"  id="scheduleTime" class="form-control" name="scheduledAt">
+                    </div>
                     <button type="submit" class="btn btn-primary">Опубликовать</button>
                 </div>
             </form>
