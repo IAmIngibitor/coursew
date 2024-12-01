@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const path = require('path')
-const sequelize = require('./db')
+const sequelize = require('./config/db')
 const authRoutes = require('./routes/authRoutes')
 const topicRoutes = require('./routes/topicRoutes')
 const pageRoutes = require('./routes/pageRoutes')

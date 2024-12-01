@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
             return next()
         }
 
-        req.user = { id: user.id, username: user.username, role: user.role }
+        req.user = { id: user.id, username: user.username, role: user.role, avatarUrl: user.avatarUrl}
         next()
     } catch (err) {
         req.user = null

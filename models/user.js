@@ -1,11 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize')
-const sequelize = require('../db')
+const sequelize = require('../config/db')
 
 const User = sequelize.define('User', {
     username: { type: DataTypes.STRING, unique: true, allowNull: false },
     password_hash: { type: DataTypes.STRING, allowNull: false },
-    role: { type: DataTypes.STRING, allowNull: false, defaultValue: 'user' }
-}, { timestamps: true })
+    role: { type: DataTypes.STRING, allowNull: false, defaultValue: 'user' },
+    avatarUrl: { type: DataTypes.STRING, allowNull: true }
+}, { timestamps: true, indexes: [{ fields: ['username'] }] })
 
 User.afterSync(async () => {
     try {

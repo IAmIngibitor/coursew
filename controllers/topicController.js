@@ -9,10 +9,8 @@ exports.createTopic = async (req, res) => {
         }
         console.log(scheduledAt)
         if (isScheduled === 'on' && scheduledAt) {
-            console.log(true)
             await ScheduledTopic.create({ content, user_id: req.user.id, scheduledAt: new Date(scheduledAt) })
         } else {
-            console.log(false)
             await topicService.createTopic(content, req.user.id)
         }
         res.redirect('/')

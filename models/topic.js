@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize')
-const sequelize = require('../db')
+const sequelize = require('../config/db')
 const User = require('./user')
 
 const Topic = sequelize.define('Topic', {
@@ -10,7 +10,7 @@ const Topic = sequelize.define('Topic', {
         defaultValue: Sequelize.NOW,
     },
     user_id: DataTypes.INTEGER
-})
+}, { indexes: [{ fields: ['user_id'] }] })
 
 Topic.prototype.formattedDate = function () {
     return this.createdAt.toLocaleString()

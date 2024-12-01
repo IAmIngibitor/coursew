@@ -24,6 +24,7 @@ header {
 .topic-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 15px;
     font-size: 16px;
     color: #263b4e;
@@ -40,4 +41,8 @@ textarea {
 
 .role-select {
     max-width: 170px;
+}
+
+.img-thumbnail {
+    border-radius: 10%;
 }
