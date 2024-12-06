@@ -28,4 +28,4 @@ exports.loginUser = async (username) => {
     const user = await User.findOne({ where: { username } })
     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET)
     return { token, user }
-};
+}

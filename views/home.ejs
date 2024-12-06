@@ -16,7 +16,7 @@
             <div>
                 <% if (user) { %>
                     <span>Привет, <strong><%= user.username %></strong>!</span>
-                    <img src="<%= user.avatarUrl %>" alt="Аватар" class="img-thumbnail" style="max-width: 60px; height: 60px;">
+                    <img src="<%= user.avatarUrl && user.avatarUrl.trim() ? user.avatarUrl : '/img/default-avatar.png' %>" alt="Аватар" class="img-thumbnail" style="max-width: 60px; height: 60px;">
                     <a href="/user/profile" class="btn btn-outline-light btn-sm">Профиль</a>
                     <a href="/auth/logout" class="btn btn-outline-light btn-sm">Выйти</a>
                 <% } else { %>
@@ -61,7 +61,7 @@
                         <%= topic.content %>
                     </div>
                     <div class="topic-footer">
-                        <span>Автор:<strong><%= topic.user.username %></strong> <img src="<%= user.avatarUrl %>" alt="Аватар" class="img-thumbnail" style="max-width: 50px; height: 50px;"></span>
+                        <span>Автор:<strong><%= topic.user.username %></strong> <img src="<%= topic.user.avatarUrl && topic.user.avatarUrl.trim() ? topic.user.avatarUrl : '/img/default-avatar.png' %>" alt="Аватар" class="img-thumbnail" style="max-width: 50px; height: 50px;"></span>
                         <% if (user && user.role === 'admin') { %>
                             <form action="/topics/delete/<%= topic.id %>" method="POST" style="display:inline;">
                                 <button type="submit" class="btn btn-danger btn-sm">Удалить пост</button>

@@ -7,7 +7,7 @@ exports.createTopic = async (content, userId) => {
 
 exports.getAllTopics = async () => {
     return await Topic.findAll({
-        include: [{ model: User, as: 'user', attributes: ['username'] }],
+        include: [{ model: User, as: 'user', attributes: ['username', 'avatarUrl'] }],
         order: [['createdAt', 'DESC']]
     })
 }
