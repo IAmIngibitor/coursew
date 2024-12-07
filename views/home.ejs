@@ -32,7 +32,7 @@
 
         <% if (user) { %>
             <hr>
-            <form action="/topics/create" method="POST" class="mb-4 mx-auto" style="max-width: 600px;">
+            <form action="/topic/create" method="POST" class="mb-4 mx-auto" style="max-width: 600px;">
                 <h2 class="mb-3">📝Создать пост</h2>
                 <div class="mb-3">
                     <textarea id="content" class="form-control" name="content" placeholder="Ваш пост..." maxlength="1000" required></textarea>
@@ -61,9 +61,12 @@
                         <%= topic.content %>
                     </div>
                     <div class="topic-footer">
-                        <span>Автор:<strong><%= topic.user.username %></strong> <img src="<%= topic.user.avatarUrl && topic.user.avatarUrl.trim() ? topic.user.avatarUrl : '/img/default-avatar.png' %>" alt="Аватар" class="img-thumbnail" style="max-width: 50px; height: 50px;"></span>
+                        <span>Автор:<strong><%= topic.user.username %></strong>
+                            <img src="<%= topic.user.avatarUrl && topic.user.avatarUrl.trim() ? topic.user.avatarUrl : '/img/default-avatar.png' %>" 
+                            alt="Аватар" class="img-thumbnail" style="max-width: 50px; height: 50px;">
+                        </span>
                         <% if (user && user.role === 'admin') { %>
-                            <form action="/topics/delete/<%= topic.id %>" method="POST" style="display:inline;">
+                            <form action="/topic/delete/<%= topic.id %>" method="POST" style="display:inline;">
                                 <button type="submit" class="btn btn-danger btn-sm">Удалить пост</button>
                             </form>
                         <% } %>

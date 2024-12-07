@@ -7,7 +7,6 @@ exports.createTopic = async (req, res) => {
         if (!content.trim()) {
             return res.status(400).send('Пост не может быть пустым.')
         }
-        console.log(scheduledAt)
         if (isScheduled === 'on' && scheduledAt) {
             await ScheduledTopic.create({ content, user_id: req.user.id, scheduledAt: new Date(scheduledAt) })
         } else {

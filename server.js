@@ -25,7 +25,7 @@ app.use(loggingMiddleware)
 
 app.use('/', pageRoutes)
 app.use('/auth', authRoutes)
-app.use('/topics', topicRoutes)
+app.use('/topic', topicRoutes)
 app.use('/user', userRoutes)
 
 sequelize.sync().then(() => {

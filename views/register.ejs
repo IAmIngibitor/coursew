@@ -27,7 +27,9 @@
             <% } %>
             <div class="mb-3">
                 <label for="username" class="form-label">Логин:</label>
-                <input type="text" id="username" name="username" value="<% if (typeof username != 'undefined' && username ) { %><%= username %><% } else { %><%= '' %><% } %>" class="form-control" required>
+                <input type="text" id="username" name="username" 
+                value="<% if (typeof username != 'undefined' && username ) { %><%= username %><% } else { %><%= '' %><% } %>" 
+                class="form-control" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Пароль:</label>
