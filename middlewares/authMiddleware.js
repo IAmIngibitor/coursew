@@ -8,18 +8,21 @@ module.exports = async (req, res, next) => {
         req.user = null
         return next()
     }
-
+    
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const user = await User.findByPk(decoded.id)
-
         if (!user) {
             req.user = null
             res.clearCookie('token')
             return next()
         }
-
-        req.user = { id: user.id, username: user.username, role: user.role, avatarUrl: user.avatarUrl}
+        req.user = { 
+            id: user.id, 
+            username: user.username, 
+            role: user.role, 
+            avatarUrl: user.avatarUrl
+        }
         next()
     } catch (err) {
         req.user = null
