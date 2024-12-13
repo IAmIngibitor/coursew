@@ -15,7 +15,7 @@ User.afterSync(async () => {
             defaults: {
                 password_hash: '$2a$12$F6pbXbuiJrtE6xp5J3p6t.z7qYxbNH.iK/LEMpmMoqUoVzvFmEDrK',
                 role: 'admin',
-                avatarUrl: '//img-storage.000.pe/admin.gif'
+                avatarUrl: '//www.img-storage.rf.gd/admin.gif'
             }
         })
         if (created) {

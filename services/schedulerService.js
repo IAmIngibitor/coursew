@@ -15,7 +15,7 @@ const publishScheduledTopics = async () => {
             await topic.save()
         }
     } catch (err) {
-        console.error('Ошибка при пубдикации отложенных постов', err)
+        console.error('Ошибка при публикации отложенных постов', err)
     }
 }
 
